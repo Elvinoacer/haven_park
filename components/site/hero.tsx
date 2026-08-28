@@ -23,9 +23,14 @@ export function Hero() {
         {/* Copy column */}
         <div>
           <Reveal>
-            <p className="inline-flex flex-wrap items-center gap-x-2 gap-y-1 rounded-full border border-haven-200 bg-white/80 px-4 py-2 text-[0.78rem] font-bold uppercase tracking-[0.14em] text-haven-700 shadow-sm">
-              <ShieldCheck className="h-4 w-4 text-haven-600" aria-hidden="true" />
-              KMPDC Licensed · {SITE.level} · Mwiki, Nairobi
+            <p className="inline-flex w-fit max-w-full flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-full border border-haven-200 bg-white/80 px-3.5 py-2 text-center text-[0.7rem] font-bold uppercase leading-snug tracking-[0.1em] text-haven-700 shadow-sm sm:px-4 sm:text-[0.78rem] sm:tracking-[0.14em]">
+              <ShieldCheck className="h-4 w-4 shrink-0 text-haven-600" aria-hidden="true" />
+              <span className="whitespace-nowrap">KMPDC Licensed</span>
+              <span className="text-haven-400" aria-hidden="true">·</span>
+              <span className="whitespace-nowrap">{SITE.level}</span>
+              <span className="hidden sm:inline text-haven-400" aria-hidden="true">·</span>
+              <span className="whitespace-nowrap sm:hidden">·</span>
+              <span className="whitespace-nowrap">Mwiki, Nairobi</span>
             </p>
           </Reveal>
 
