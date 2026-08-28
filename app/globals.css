@@ -1,26 +1,236 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-display: var(--font-jakarta), var(--font-inter), ui-sans-serif,
+    system-ui, sans-serif;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* Haven green — the brand's clinical, calming core */
+  --color-haven-50: #f0faf6;
+  --color-haven-100: #dcf1e9;
+  --color-haven-200: #bce3d3;
+  --color-haven-300: #8fcdb6;
+  --color-haven-400: #5cb092;
+  --color-haven-500: #379577;
+  --color-haven-600: #267a60;
+  --color-haven-700: #1f614e;
+  --color-haven-800: #1c4e40;
+  --color-haven-900: #194136;
+  --color-haven-950: #0c2620;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  /* Ink & supporting neutrals */
+  --color-ink: #10201a;
+  --color-mist: #55665e;
+  --color-paper: #f7faf8;
+  --color-cream: #fdfcf8;
+
+  /* Emergency red — reserved strictly for urgent care moments */
+  --color-ember-50: #fef3f2;
+  --color-ember-100: #fee4e2;
+  --color-ember-200: #fecdc9;
+  --color-ember-500: #e0483a;
+  --color-ember-600: #d92d20;
+  --color-ember-700: #b42318;
+
+  /* Warm gold accent */
+  --color-gold-100: #fdf1d8;
+  --color-gold-400: #e9b949;
+  --color-gold-500: #d9a032;
+  --color-gold-600: #b57e21;
+
+  --animate-marquee: marquee 44s linear infinite;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-float-late: float 8.5s ease-in-out 1.4s infinite;
+  --animate-pulse-dot: pulse-dot 1.7s ease-in-out infinite;
+  --animate-ring-pulse: ring-pulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-11px);
+    }
+  }
+  @keyframes pulse-dot {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.4;
+      transform: scale(0.78);
+    }
+  }
+  @keyframes ring-pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(217, 45, 32, 0.45);
+    }
+    70% {
+      box-shadow: 0 0 0 16px rgba(217, 45, 32, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(217, 45, 32, 0);
+    }
   }
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6.5rem;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-white);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-haven-200);
+  color: var(--color-haven-950);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-haven-600);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---------- Scroll-reveal choreography ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Glassmorphism (used sparingly, where it earns its place) ---------- */
+.glass {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(18px) saturate(1.5);
+  -webkit-backdrop-filter: blur(18px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+}
+.glass-dark {
+  background: rgba(12, 38, 32, 0.55);
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+.glass-panel {
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(22px) saturate(1.6);
+  -webkit-backdrop-filter: blur(22px) saturate(1.6);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 1px 2px rgba(16, 32, 26, 0.05),
+    0 12px 40px -12px rgba(16, 32, 26, 0.18);
+}
+
+/* ---------- Decorative helpers ---------- */
+.dot-grid {
+  background-image: radial-gradient(
+    rgba(38, 122, 96, 0.14) 1.2px,
+    transparent 1.2px
+  );
+  background-size: 22px 22px;
+}
+
+.text-gradient {
+  background: linear-gradient(
+    100deg,
+    var(--color-haven-600) 0%,
+    var(--color-haven-400) 55%,
+    var(--color-gold-500) 110%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.underline-slide {
+  position: relative;
+}
+.underline-slide::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 2px;
+  width: 100%;
+  border-radius: 2px;
+  background: var(--color-haven-500);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.underline-slide:hover::after,
+.underline-slide[aria-current="true"]::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: var(--animate-marquee);
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Slim, brand-tinted scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-paper);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-haven-200);
+  border-radius: 8px;
+  border: 2px solid var(--color-paper);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-haven-300);
+}
+
+/* ---------- Motion safety ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .marquee-track {
+    animation: none;
+  }
+  .animate-float,
+  .animate-float-late {
+    animation: none;
+  }
 }
